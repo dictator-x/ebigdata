@@ -100,7 +100,8 @@
             </execution>
           </executions>
           <configuration>
-            <mainClass>com.ebigdata.App</mainClass>
+            <mainClass>com.ebigdata.hadoop.hdfs.HDFSApp</mainClass>
+            <!-- <mainClass>com.ebigdata.hadoop.hdfs.HDFSApp</mainClass> -->
           </configuration>
         </plugin>
       </plugins>
