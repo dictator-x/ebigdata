@@ -1,6 +1,10 @@
 package com.ebigdata.hadoop.hdfs;
 
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.RemoteIterator;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.fs.LocatedFileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -94,6 +98,64 @@ public class HDFSApp {
             }
         );
         IOUtils.copyBytes(in, out, 4096);
+    }
+
+    @Test
+    public void listFiles() throws Exception {
+        FileStatus[] statuses = fileSystem.listStatus(new Path("/hdfsapi/test"));
+
+        for ( FileStatus file : statuses ) {
+            String isDir = file.isDirectory() ? "directory" : "file";
+            String permission = file.getPermission().toString();
+            short replication = file.getReplication();
+            long length = file.getLen();
+            String path = file.getPath().toString();
+
+            System.out.println(isDir + "\t" + permission + "\t" + replication +
+                "\t" + length + "\t" + path);
+        }
+    }
+
+    @Test
+    public void listFilesRecursive() throws Exception {
+        RemoteIterator<LocatedFileStatus> files= fileSystem.listFiles(new Path("/"), true);
+
+        while ( files.hasNext() ) {
+            LocatedFileStatus file = files.next();
+
+            String isDir = file.isDirectory() ? "directory" : "file";
+            String permission = file.getPermission().toString();
+            short replication = file.getReplication();
+            long length = file.getLen();
+            String path = file.getPath().toString();
+
+            System.out.println(isDir + "\t" + permission + "\t" + replication +
+                "\t" + length + "\t" + path);
+        }
+    }
+
+    @Test
+    public void copyToLocalFile() throws Exception {
+        Path src = new Path("/hdfsapi/test/a.txt");
+        Path dst = new Path("/Users/xuerong/Downloads");
+        fileSystem.copyToLocalFile(src, dst);
+    }
+
+    @Test
+    public void getFileBlockLocations() throws Exception {
+        FileStatus fileStatus = fileSystem.getFileStatus(new Path("/jdk-8u91-linux-x64.tar.gz"));
+        BlockLocation[] blocks = fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
+
+        for ( BlockLocation block : blocks ) {
+            for ( String name : block.getNames() ) {
+                System.out.println(name + " : " + block.getOffset() + " : " + block.getLength());
+            }
+        }
+    }
+
+    @Test
+    public void delete() throws Exception {
+        fileSystem.delete(new Path("/jdk-8u91-linux-x64.tar.gz"), true);
     }
 
     public static void main(String[] args) throws Exception {
