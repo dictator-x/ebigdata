@@ -11,7 +11,7 @@ public class AccessMapper extends Mapper<LongWritable, Text, Text, Access> {
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-        String[] lines = value.toString().split(" ");
+        String[] lines = value.toString().split("\t");
 
         String phone = lines[1];
         long up = Long.parseLong(lines[lines.length-3]);

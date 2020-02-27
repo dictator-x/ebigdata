@@ -1,12 +1,13 @@
 package com.ebigdata.hadoop.mr.access;
 
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 
 import java.io.IOException;
 
-public class AccessReducer extends Reducer<Text, Access, Text, Access> {
+public class AccessReducer extends Reducer<Text, Access, NullWritable, Access> {
 
     @Override
     protected void reduce(Text key, Iterable<Access> values, Context context) throws IOException, InterruptedException {
@@ -19,6 +20,6 @@ public class AccessReducer extends Reducer<Text, Access, Text, Access> {
             downs += access.getDown();
         }
 
-        context.write(key, new Access(key.toString(), ups, downs, ups+downs));
+        context.write(NullWritable.get(), new Access(key.toString(), ups, downs, ups+downs));
     }
 }
