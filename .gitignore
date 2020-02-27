@@ -4,3 +4,6 @@
 # Build targets
 /target
 */target
+
+# Test inputs
+/input
