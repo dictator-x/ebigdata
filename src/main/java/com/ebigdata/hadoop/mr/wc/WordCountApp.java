@@ -5,10 +5,11 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.conf.Configuration;
 
-import org.apache.hadoop.fs.Path;
+import java.net.URI;
 
 public class WordCountApp {
 
@@ -30,6 +31,12 @@ public class WordCountApp {
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
+        FileSystem fileSystem = FileSystem.get(new URI("hdfs://hadoop000:8020"), configuration);
+        Path outputPath = new Path("/wordcount/output");
+        if ( fileSystem.exists(outputPath) ) {
+            fileSystem.delete(outputPath, true);
+        }
 
         FileInputFormat.setInputPaths(job, new Path("/wordcount/input"));
         FileOutputFormat.setOutputPath(job, new Path("/wordcount/output"));
