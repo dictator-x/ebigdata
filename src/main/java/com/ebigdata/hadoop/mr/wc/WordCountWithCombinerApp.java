@@ -27,7 +27,7 @@ public class WordCountWithCombinerApp {
         job.setReducerClass(WordCountReducer.class);
 
         // Add combiner.
-        jav.setCombinerClass(WordCountReducer.class);
+        job.setCombinerClass(WordCountReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
