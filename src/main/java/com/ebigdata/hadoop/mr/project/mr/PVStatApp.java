@@ -23,7 +23,11 @@ public class PVStatApp {
 
         Configuration configuration = new Configuration();
 
-        String dest = "output/v1/pvstat";
+        // String input = "input/raw/trackinfo_20130721.data";
+        // String dest = "output/v1/pvstat";
+
+        String input = args[0];
+        String dest = args[1];
 
         FileSystem fileSystem = FileSystem.get(configuration);
         Path outputPath = new Path(dest);
@@ -44,7 +48,7 @@ public class PVStatApp {
         job.setOutputKeyClass(NullWritable.class);
         job.setOutputValueClass(LongWritable.class);
 
-        FileInputFormat.setInputPaths(job, new Path("input/raw/trackinfo_20130721.data"));
+        FileInputFormat.setInputPaths(job, new Path(input));
         FileOutputFormat.setOutputPath(job, new Path(dest));
 
         job.waitForCompletion(true);

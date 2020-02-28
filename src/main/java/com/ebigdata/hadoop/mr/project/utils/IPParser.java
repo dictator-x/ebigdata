@@ -1,7 +1,7 @@
 package com.ebigdata.hadoop.mr.project.utils;
 
 public class IPParser extends IPSeeker {
-    private static final String ipFilePath = "ip/qqwry.dat";
+    private static final String ipFilePath = "/home/hadoop/lin/qqwry.dat";
     private static IPParser obj = new IPParser(ipFilePath);
 
 
