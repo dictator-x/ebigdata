@@ -32,6 +32,9 @@ public class LogParser {
             info.put("country", country);
             info.put("province", province);
             info.put("city", city);
+
+            String url = splits[1];
+            info.put("url", url);
         }
 
         return info;
