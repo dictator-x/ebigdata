@@ -13,7 +13,7 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <hadoop.version>2.6.0-cdh5.15.1</hadoop.version>
+    <hadoop.version>2.7.0</hadoop.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
